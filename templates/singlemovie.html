@@ -1,0 +1,123 @@
+{% extends "header_footer.html" %}
+movie_id_box
+{% block title %}yAFlik | Movie Details{% endblock title %}
+
+{% block content %}
+    <input type="hidden" value="{{movie_id}}" id="movie_id_box">
+    <h2 class="m-4">{{movie_details[0]}}</h2>
+    <div class="movie_box" id="movie_box_cont">
+        <!-- This will come from javascript -->
+    </div>
+
+    <section id="movie_detail_section" class="row">
+        <!-- Movie Details -->
+        <div class="movie_detail col-7">
+            <div class="cast">
+                <span class="movie_heading">Star Cast: </span>
+                <span class="movie_content">
+                    {% for stars in movie_details[3] %}{{stars}}, {% endfor %}
+                </span>
+            </div>
+            <div class="director">
+                <span class="movie_heading">Directed By: </span>
+                <span class="movie_content">
+                    {{ movie_details[2][0] }}
+                </span>
+            </div>
+            <div class="genres">
+                <span class="movie_heading">Genres: </span>
+                <span class="movie_content">
+                    {% for genres in movie_details[1] %}{{genres}}, {% endfor %}
+                </span>
+            </div>
+            <div class="genres">
+                <span class="movie_heading">Average Rating: </span>
+                <span class="movie_content">
+                    {{movie_details[-1]}}
+                </span>
+            </div>
+        </div>
+        <div class="form ratings col-4 mb-3">
+            <div class="form-floating mb-3">
+                <input type="text" id="rating_count" name="rating_count" class="form-control mb-2">
+                <label for="review_count" class="text-dark">Review Count</label>
+            </div>
+            <div class="form-floating">
+                <textarea class="form-control mb-2" placeholder="Leave a comment here" id="review"style="height: 100px"></textarea>
+                <label for="review" class="text-dark">Review Comment</label>
+            </div>
+            
+            <button onclick="sendReview()" class="btn btn-success">Submit Review</button>
+        </div>
+
+        <hr>
+
+        <div class="recommended_movies mb-5">
+            <h1>Recommended Movies</h1>
+            <div>
+            <div class="swiper mySwiper">
+                <div class="swiper-wrappers row">
+                    {% for i in range(5) %}
+                        <div class="col-lg-3 col-md-4 col-12 col-sm-6">
+                            <div class="card">
+                                <img class="card-img-top" src="{{recommend_movies_poster[i]}}" alt="Title">
+                                <div class="card-body">
+                                    <h4 class="card-title">{{recommend_movies[i]}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+    
+
+{% endblock content %}
+
+{% block script %}
+    <script>
+        let movie_id_box = document.querySelector("#movie_id_box").value
+
+        async function openTrailer() {
+            let trailer_data = await fetch(`https://api.themoviedb.org/3/movie/${movie_id_box}/videos?api_key=b0d7e30204c4cc2b1b1607b7039135d9`)
+            let trailer_data_json = await trailer_data.json()
+            let movie_key = trailer_data_json.results[0].key
+            console.log(trailer_data_json.results)
+            
+            let movie_box_cont = document.getElementById("movie_box_cont")
+            movie_box_cont.innerHTML = `<iframe width="90%" height="515" src="https://www.youtube.com/embed/${movie_key}?si=JfQfnJWtH9k6_Mz6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+
+            document.getElementById("movie_detail_section").style.display = 'flex'
+        }
+
+        window.addEventListener("load", openTrailer)
+
+        // submit review
+        function sendReview() {
+            let user_id = document.getElementById("loggedin_user_id").value
+            let rating_count = document.getElementById("rating_count").value
+            let review = document.getElementById("review").value
+
+            $.ajax({
+                type: "post",
+                url: "/sendreview",
+                data: {
+                    user_id: user_id,
+                    movie_id: movie_id_box,
+                    review: review,
+                    rating_count: rating_count,
+                },
+                success: function (response) {
+                    if (response.status == "success") {
+                        console.log(response.message)
+                        alert(response.message)
+                    } else {
+                        alert("Something went wrong")
+                    }
+                }
+            });
+        }
+    </script>
+{% endblock script %}

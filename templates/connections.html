@@ -1,0 +1,64 @@
+{% extends "header_footer.html" %}
+{% block title %}yaFlix | Connections{% endblock title %}
+
+{% block content %}
+    <section class="connection_page">
+        <div class="row">
+            <div class="col-3">
+                <div class="conn_user_profile">
+                    <div class="user_img_name">
+                        <img src="../static/images/user.jpg" class="rounded-circle user_image" alt="user">
+                        <a href="/dashboard" class="user_name">{{session['user']['name']}}</a>
+                    </div>
+                    <hr>
+                    <div class="user_friends">
+                        <table class="user_friends_table w-100">
+                            <tr>
+                                <th>Follwers</th>
+                                <td>{{friends_count[0]}}</td>
+                            </tr>
+                            <tr>
+                                <th>Followings</th>
+                                <td>{{friends_count[1]}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="conn_user_content">
+                    <div class="row user_cards">
+                        {% for i in users %}
+                            <div class="user_friend_card col-3 p-1 mx-4 my-2">
+                                <img src="../static/images/user.jpg" class="rounded-circle user_image" alt="user">
+                                <a href="/dashboard" class="user_name">{{i['name']}}</a>
+                                <div class="follower_following">
+                                    <p><span>Followers</span>: {{i['followers']}} | <span>Followings</span>: {{i['followings']}}</p>
+                                </div>
+                                <button class="btn btn-success btn-sm rounded-pill w-100 mb-2" id="btn_{{i['id']}}" onclick="sendRequest({{i['id']}})">
+                                    Connect
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    <section>
+{% endblock content %}
+
+{% block script %}
+    <script>
+        function sendRequest(friendid) {
+            $.ajax({
+                type: "POST",
+                url: "/addfriend",
+                data: {friendid: friendid},
+                success: function (response) {
+                    document.getElementById(`btn_${friendid}`).innerHTML = "Pending"
+                    document.getElementById(`btn_${friendid}`).style.backgroundColor = "grey"
+                }
+            });
+        }
+    </script
+{% endblock script %}

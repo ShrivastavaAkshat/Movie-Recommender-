@@ -1,0 +1,13 @@
+{% extends "header_footer.html" %}
+
+{% block title %}yA Flix | Used Dashboard{% endblock title %}
+
+{% block content %}
+    <div class="container my-4">
+        <h2 class="text-center">User Dashboard</h2>
+
+        <h5 class="">User Name: {{user.name}}</h5>
+        <h5 class="">User Email: {{user.email}}</h5>
+        <a href="/logout" class="btn btn-danger text-center">Logout</a>
+    </div>
+{% endblock content %}

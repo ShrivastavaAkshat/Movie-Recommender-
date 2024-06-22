@@ -1,0 +1,24 @@
+{% extends "header_footer.html" %}
+
+{% block title %}yA Flix | Trending Movies{% endblock title %}
+
+{% block content %}
+    <section class="trending_movies row mt-3">
+        {% for key, values in movie_data["title"].items() %}
+            <div class="card trending_movie_card col-md-3">
+                <div class="card-body">
+                    <h4 class="card-title">{{values}}</h4>
+                    <h4 class="card-title">{{movie_data['id'][key]}}</h4>
+                    <p class="card-text"><b class="vote_average">Average Voting:</b> {{movie_data['vote_average'][key]}}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+    <!-- {{ (movie_data['id'].values()) }} -->
+{% endblock content %}
+
+{% block script %}
+    <script>
+        
+    </script>
+{% endblock script %}

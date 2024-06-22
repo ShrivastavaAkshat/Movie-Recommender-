@@ -1,0 +1,15 @@
+@media (max-width: 576px) {
+    .popular_card_section {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    .popular_movies, .user_based_movies{
+        margin: 0px !important;
+    }
+
+    .popular_card {
+        margin: 5px 0px 5px 10px;
+        width: 95% !important;
+    }
+}

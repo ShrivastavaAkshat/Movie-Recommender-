@@ -1,0 +1,152 @@
+{% extends "header_footer.html" %} {% block title %}yA Flix | Home
+Page{%endblock title %} {% block content %}
+
+<div class="popular_movies">
+  <h1>Popular Movies</h1>
+  <div>
+    <div class="popular_movies_slider">
+      <section class="popular_card_section">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            {% for key, values in display_movies['movie_id'].items() %} 
+              {% if key<12 %}
+                <div class="swiper-slide">
+                  <div class="card popular_card p-0">
+                    <div class="card-header">
+                        <h5>{{ display_movies['title'][key] }}</h5>
+                    </div>
+                    <div class="card-body">
+                      <p class="card-text">Directed By: <span class="dir_name fw-bold">{{display_movies['crew'][key][0]}}</span></p>
+                      <h5 class="card-title">Star Cast</h5>
+                      <ol>
+                          {% for cast in display_movies['cast'][key] %}
+                              <li>{{cast}}</li>
+                          {% endfor %}
+                      </ol>
+                      <h5 class="card-title">Genres</h5>
+                      <p>{% for genres in display_movies['genres'][key] %}<span>{{genres}}, </span>{% endfor %}</p>
+                      <a href="moviedetail/{{values}}" class="btn btn-success">Watch Trailer<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                          <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                        </svg>
+                      </a>
+                    </div>
+                    <div class="card-footer text-muted">Average Voting: <span class="fw-bold">{{display_movies['vote_average'][key]}}</span></div>
+                  </div>
+                </div>
+              {% endif %} 
+            {% endfor %} 
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="user_based_movies">
+  <h1>Based on your Interest</h1>
+  <div>
+    <div class="user_based_movies_slider">
+      <section class="popular_card_section row">
+        {% for movie_list in user_based_movies %} 
+          {% for movie_detial in movie_list %}
+            <div class="card popular_card col-lg-3 col-md-4 col-12 col-sm-6 p-0">
+              <div class="card-body">
+                <!--<img class="card-img-top" id="image_{{movie_detial[0]}}" src="" alt="Title">-->
+                <h5 class="card-title">{{ movie_detial[1] }}</h5>
+                <a href="moviedetail/{{movie_detial[0]}}" class="btn btn-success">Watch Trailer<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                    <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                  </svg>
+                </a>
+              </div>
+              <div class="card-footer text-muted">Average Voting: <span class="fw-bold">{{movie_detial[2]}}</span></div>
+            </div>
+          {% endfor %}
+        {% endfor %} 
+      </section>
+    </div>
+  </div>
+</div>
+
+{% if user_friend_movies %}
+  <div class="user_based_movies">
+    <h1>Based on your Friends Interest</h1>
+    <div>
+      <div class="user_based_movies_slider">
+        <section class="popular_card_section row">
+          {% for movie_list in user_friend_movies %} 
+            {% for movie_detials in movie_list %}
+              {% for movie_detial in movie_detials %}
+                <div class="card popular_card col-lg-3 col-md-4 col-12 col-sm-6 p-0">
+                  <img class="card-img-top" id="image_{{movie_detial[0]}}" src="" alt="Title">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ movie_detial[1] }}</h5>
+                    <a href="moviedetail/{{movie_detial[0]}}" class="btn btn-success">Watch Trailer<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                        <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                      </svg>
+                    </a>
+                  </div>
+                  <div class="card-footer text-muted">Average Voting: <span class="fw-bold">{{movie_detial[2]}}</span></div>
+                </div>
+              {% endfor %}
+            {% endfor %}
+          {% endfor %} 
+        </section>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<div class="top_movies mb-5">
+  <h1>Top Movies</h1>
+  <div>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrappers row" id="movie_data_content">
+        <!-- Data Coming from API call -->
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</div>
+{% endblock content %} 
+
+{% block script %}
+<script>
+  //const movies_Arr = []
+  let movie_data_content = document.querySelector("#movie_data_content");
+
+  async function getMovieData() {
+    const response = await fetch(
+      "https://api.themoviedb.org/3/trending/all/week?api_key=b0d7e30204c4cc2b1b1607b7039135d9&language=en-US"
+    );
+    const movies = await response.json();
+    const movie = movies.results;
+    console.log(movie);
+    //movies_Arr.push(movies.results)
+    let i = 0;
+    movie.forEach((element) => {
+      i++;
+      if (i < 12) {
+        single_movie_data_content = `<div class="col-lg-3 col-md-4 col-12 col-sm-6 home_movie_card"><div class="card" style="width: 16rem; height: 680px;">
+                    <img src="https://image.tmdb.org/t/p/w500/${element.poster_path}" class="card-img-top" alt="${element.original_title}">
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <h5 class="card-title">${element.original_title}</h5>
+                        </div>
+                      <p class="card-text">${element.overview}</p>
+                      <a href="javascript:void(0)" class="btn btn-primary bottom-btn">Vote: ${element.vote_average}</a>
+                    </div>
+                  </div></div>`;
+        movie_data_content.innerHTML += single_movie_data_content;
+      } else {
+        //break;
+      }
+    });
+  }
+  //console.log(movies_Arr)
+  window.addEventListener("load", getMovieData());
+
+</script>
+
+{% endblock script %}

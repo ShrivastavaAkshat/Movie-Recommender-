@@ -1,0 +1,265 @@
+::selection{
+    background-color: rgb(64, 105, 47);
+    color: white;
+}
+
+body {
+    background-color: black !important;
+    color: white !important;
+}
+
+.navbar-brand{
+    font-size: 28px !important;
+    margin-top: -6px;
+}
+
+/* Home Page */
+.top_movies {
+    margin-top: 10px;
+}
+
+.swiper-wrappers .card {
+    margin: 5px 20px;
+    margin-bottom: 20px;
+}
+
+.swiper-wrappers .card .card-body {
+    background-color: black;
+    opacity: 0.5;
+}
+
+.swiper-wrappers .card .card-body .card-text {
+    height: 120px;
+    overflow-y: auto;
+}
+
+.home_movie_card{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+.bottom-btn {
+    position: absolute;
+    bottom: 20px;
+}
+
+.login_container {
+    border: 1.3px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0px 5px 7px rgb(156, 156, 156);
+    padding: 25px 10px;
+    background-color: white;
+    color: black;
+    width: 50% !important;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.popular_movies, .user_based_movies {
+    margin-left: 20px;
+}
+
+.trending_movies {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.trending_movie_card {
+    width: 22rem !important;
+    margin: 20px
+}
+
+.trending_movie_card h4,
+.trending_movie_card p {
+    color: black;
+}
+
+.trending_movie_card:hover {
+    /* outline: 0;
+    box-shadow: 0 0 0 .25rem rgba(255, 255, 255, 0.25) */
+    box-shadow:
+        0 0 5px 1px red,
+        0 0 10px 2px orange,
+        0 0 15px 3px yellow,
+        0 0 20px 4px green,
+        0 0 25px 5px blue,
+        0 0 30px 6px indigo,
+        0 0 35px 0px violet;
+    animation: 0.5s ease-in-out;
+    /* cursor: pointer; */
+}
+
+@keyframes trending_movie_card {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.vote_average{
+    color: yellowgreen;
+}
+
+.popular_card{
+    color: black;
+    margin: 2rem;
+    /* width: 24rem; */
+}
+
+.popular_movies_slider{
+    height: 550px;
+}
+
+.popular_card_section{
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+.popular_card:hover{
+    box-shadow: 0 0 7px 6px silver;
+}
+
+.movie_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+}
+
+#movie_detail_section{
+    display: none;
+    margin: 20px;
+}
+
+.movie_heading{
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 1px;
+    /* text-decoration: underline; */
+}
+
+/* Connection Page */
+.connection_page{
+    margin: 50px;
+    width: 80%;
+}
+.conn_user_content{
+    border: 1.3px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0px 1px 3px rgb(156, 156, 156);
+    padding: 25px 10px;
+    background-color: white;
+    color: black;
+    width: 100% !important;
+    margin: auto;
+    vertical-align: middle;
+}
+
+.conn_user_profile{
+    border: 1.3px solid white;
+    border-radius: 10px;
+    box-shadow: 0 0px 2px 5px rgb(156, 156, 156);
+    padding: 25px 10px;
+    background-color: white;
+    color: black;
+    width: 100% !important;
+}
+
+.user_img_name{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user_image{
+    width: 120px;
+    height: 100px;
+    display: block;
+}
+
+.user_name{
+    display: block !important;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.user_name:hover{
+    color: black;
+    text-decoration: underline;
+}
+
+.ruler{
+    color: black;
+}
+
+.user_friends_table{
+    color: black;
+}
+
+.user_friends_table tr td{
+    padding: 5px 0px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.user_cards{
+    align-items: left;
+}
+
+.user_friend_card{
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1.5px solid black;
+    border-radius: 7px;
+}
+
+.follower_following p{
+    font-size: 14px;
+}
+
+.follower_following span{
+    color: green;
+}
+
+.swiper-button-next:after, .swiper-button-prev:after{
+    color: #ff0000 !important;
+    font-size: 29px !important;
+    background-color: #198754 !important;
+    opacity: 0.5;
+}
+
+.review_input_boxes{
+    height: 35px;
+}
+
+.text-dark{
+    color: black !important;
+}

@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}yA Flix{% endblock title %}</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/CSS/style.css">
+        <link rel="stylesheet" href="../static/CSS/responsive.css">
+        <link rel="stylesheet" href="../static/CSS/bootstrap.min.css">
+        <link rel="stylesheet" href="../static/swiper/swiper-bundle.min.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">yaFlix</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/trending">Trending Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/connections">Connect</a>
+                        </li>
+                        <!-- <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li> -->
+                    </ul>
+                    <form class="d-flex">
+                        {% if session["user"] %}
+                            <a class="btn btn-primary" href="/dashboard">
+                                {{ session['user']['name'] }}
+                            </a>
+                            <input type="hidden" id="loggedin_user_id" value="{{session['user']['id']}}" />
+                        {% else %}
+                            <li class="nav-item mt-1">
+                                <a class="btn btn-outline-success" href="/login">Login</a>
+                            </li>
+                            <li class="nav-item mt-1">
+                                <a class="btn btn-outline-success" href="/register">Register</a>
+                            </li>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+        <div class="content">
+            {% block content %}{% endblock content %}
+        </div>
+        
+        <script src="../static/JS/bootstrap.bundle.min.js" async defer></script>
+        <script src="../static/JS/jquery.min.js" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            var swiper = new Swiper(".mySwiper", {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                pagination: {
+                  el: ".swiper-pagination",
+                  clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    100: {
+                      slidesPerView: 1,
+                      spaceBetween: 20,
+                    },
+                    576: {
+                      slidesPerView: 2,
+                      spaceBetween: 10,
+                    },
+                    991: {
+                      slidesPerView: 3,
+                      spaceBetween: 50,
+                    },
+                },
+            });
+        </script>
+        {% block script %}{% endblock script %}
+    </body>
+</html>
